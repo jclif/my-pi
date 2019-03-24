@@ -1,29 +1,42 @@
 # MyPi
 
-**TODO: Add description**
+This is a toy project to explore Nerves(-hub), and the vast world of Raspberry Pi.
 
-## Targets
+## First Things First
 
-Nerves applications produce images for hardware targets based on the
-`MIX_TARGET` environment variable. If `MIX_TARGET` is unset, `mix` builds an
-image that runs on the host (e.g., your laptop). This is useful for executing
-logic tests, running utilities, and debugging. Other targets are represented by
-a short name like `rpi3` that maps to a Nerves system image for that platform.
-All of this logic is in the generated `mix.exs` and may be customized. For more
-information about targets see:
+1. Export Environment Variables (use a file in ./tmp/ or your bash profile)
+```bash
+#!/usr/bin/env bash
 
-https://hexdocs.pm/nerves/targets.html#content
+export MIX_TARGET=rpi3
+export NERVES_NETWORK_SSID=wifi_network_name
+export NERVES_NETWORK_PSK=wifi_network_password
+```
 
-## Getting Started
+## Updating Firmware Remotely
 
-To start your Nerves app:
-  * `export MIX_TARGET=my_target` or prefix every command with
-    `MIX_TARGET=my_target`. For example, `MIX_TARGET=rpi3`
-  * Install dependencies with `mix deps.get`
-  * Create firmware with `mix firmware`
-  * Burn to an SD card with `mix firmware.burn`
+1. Install dependencies
+```bash
+mix deps.get
+```
 
-## Learn more
+2. Publish some firmware
+```bash
+mix firmware
+mix nerves_hub.firmware publish --key devkey
+```
+
+3. Create a deployment
+```bash
+mix nerves_hub.deployment create
+mix nerves_hub.deployment update deployment_name is_active true
+```
+
+## Adding a New Device
+
+Coming soon...
+
+## Further Reading
 
   * Official docs: https://hexdocs.pm/nerves/getting-started.html
   * Official website: https://nerves-project.org/
